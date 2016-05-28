@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title> Speech Recognition App</title>
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+
+<style>
+    body {
+        font-size: 40px;
+    }
+    
+    .container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        min-height: 500px;
+        padding: 10px;
+    }
+    
+    .luz-apagada {
+        color: white;
+        background: black;
+        animation: luz-apagada .5s ease-in-out;
+    }
+    
+    .luz-acessa {
+        color: black;
+        background: white;
+        animation: luz-acessa .5s ease-in-out;
+    }
+    
+    @keyframes luz-apagada {
+        0% {
+            background: white;
+            color: black;
+        }
+        100% {
+            background: black;
+            color: white;
+        }
+    }
+    
+    @keyframes luz-acessa {
+        0% {
+            background: black;
+            color: white;
+        }
+        100% {
+            background: white;
+            color: black;
+        }
+    }
+</style>
+
+<body>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <p> Este site utiliza comandos por voz.</p>
+                <p> Para <span id="estado">Apagar</span> as luzes diga: 'luz'</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        var luzAcessa = true;
+        var estadoSpan = document.querySelector('#estado');
+        
+        window.addEventListener('DOMContentLoaded', function(e){
+            var speakBtn = document.querySelector('#speakBtn');
+            var speech = window.SpeechRecognition || window.webkitSpeechRecognition
+            
+            var recognition;
+             
+            try{                
+                recognition = new SpeechRecognition();
+            }catch(error){                
+                recognition = new webkitSpeechRecognition();
+            }
+            
+            recognition.continuous  = true;
+                recognition.start();
+            
+            recognition.addEventListener('result', function(e){
+                var result = e.results[e.resultIndex][0].transcript.trim();
+                
+                if(result.toLowerCase() === "luz"){
+                    if(luzAcessa){                        
+                        document.body.classList.remove('luz-acessa');
+                        document.body.classList.add('luz-apagada');
+                        estadoSpan.innerHTML = 'Acender';
+                    }else{
+                        document.body.classList.remove('luz-apagada');
+                        document.body.classList.add('luz-acessa');
+                        estadoSpan.innerHTML = 'Apagar';
+                    }               
+                    luzAcessa = !luzAcessa;
+                }; 
+            },false);
+            
+            if(window.SpeechRecognition || window.webkitSpeechRecognition){
+            }else{
+                alert('Este navegador não suporta esta funcionalidade.');                
+            }
+            
+        }, false);
+    </script>
+
+</body>
+
+</html>
