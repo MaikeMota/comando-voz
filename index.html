@@ -10,7 +10,7 @@
     body {
         font-size: 40px;
     }
-    
+
     .container {
         display: flex;
         align-items: center;
@@ -19,19 +19,19 @@
         min-height: 500px;
         padding: 10px;
     }
-    
+
     .luz-apagada {
         color: white;
         background: black;
         animation: luz-apagada .5s ease-in-out;
     }
-    
+
     .luz-acessa {
         color: black;
         background: white;
         animation: luz-acessa .5s ease-in-out;
     }
-    
+
     @keyframes luz-apagada {
         0% {
             background: white;
@@ -42,7 +42,7 @@
             color: white;
         }
     }
-    
+
     @keyframes luz-acessa {
         0% {
             background: black;
@@ -75,44 +75,47 @@
     <script>
         var luzAcessa = true;
         var estadoSpan = document.querySelector('#estado');
-        
-        window.addEventListener('DOMContentLoaded', function(e){
+
+        window.addEventListener('DOMContentLoaded', function (e) {
             var speakBtn = document.querySelector('#speakBtn');
             var speech = window.SpeechRecognition || window.webkitSpeechRecognition
-            
+
             var recognition;
-             
-            try{                
+
+            try {
                 recognition = new SpeechRecognition();
-            }catch(error){                
+            } catch (error) {
                 recognition = new webkitSpeechRecognition();
             }
-            
-            recognition.continuous  = true;
-                recognition.start();
-            
-            recognition.addEventListener('result', function(e){
-                var result = e.results[e.resultIndex][0].transcript.trim();
-                
-                if(result.toLowerCase() === "luz"){
-                    if(luzAcessa){                        
-                        document.body.classList.remove('luz-acessa');
-                        document.body.classList.add('luz-apagada');
-                        estadoSpan.innerHTML = 'Acender';
-                    }else{
-                        document.body.classList.remove('luz-apagada');
-                        document.body.classList.add('luz-acessa');
-                        estadoSpan.innerHTML = 'Apagar';
-                    }               
-                    luzAcessa = !luzAcessa;
-                }; 
-            },false);
-            
-            if(window.SpeechRecognition || window.webkitSpeechRecognition){
-            }else{
-                alert('Este navegador não suporta esta funcionalidade.');                
+
+            recognition.continuous = true;
+            recognition.start();
+
+            recognition.addEventListener('result', function (e) {
+                setTimeout(function () {
+                    console.log(e.results[e.resultIndex][0].transcript)
+                    var result = e.results[e.resultIndex][0].transcript.trim();
+
+                    if (result.toLowerCase() === "luz") {
+                        if (luzAcessa) {
+                            document.body.classList.remove('luz-acessa');
+                            document.body.classList.add('luz-apagada');
+                            estadoSpan.innerHTML = 'Acender';
+                        } else {
+                            document.body.classList.remove('luz-apagada');
+                            document.body.classList.add('luz-acessa');
+                            estadoSpan.innerHTML = 'Apagar';
+                        }
+                        luzAcessa = !luzAcessa;
+                    };
+                }, 50)
+            }, false);
+
+            if (window.SpeechRecognition || window.webkitSpeechRecognition) {
+            } else {
+                alert('Este navegador não suporta esta funcionalidade.');
             }
-            
+
         }, false);
     </script>
 
