@@ -3,9 +3,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title> Speech Recognition App</title>
-
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
-
 <style>
     body {
         font-size: 40px;
@@ -54,25 +52,22 @@
         }
     }
 </style>
-
 <body>
-
-    <div class="container">
-        <div class="row">
-            <div class="col-sm-12">
-                <div class="page-header">
-                    <p> Este site utiliza comandos por voz.</p>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-sm-12">
-                <p> Para <span id="estado">Apagar</span> as luzes diga: 'luz'</p>
-            </div>
-        </div>
-    </div>
-
-    <script>
+<div class="container">
+<div class="row">
+<div class="col-sm-12">
+<div class="page-header">
+<p> Este site utiliza comandos por voz.</p>
+</div>
+</div>
+</div>
+<div class="row">
+<div class="col-sm-12">
+<p> Para <span id="estado">Apagar</span> as luzes diga: 'luz'</p>
+</div>
+</div>
+</div>
+<script>
         var luzAcessa = true;
         var estadoSpan = document.querySelector('#estado');
 
@@ -118,7 +113,4 @@
 
         }, false);
     </script>
-
-</body>
-
 </html>
